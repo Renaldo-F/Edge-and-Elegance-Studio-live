@@ -1,0 +1,1836 @@
+/* ═══════════════════════════════════════════════════════════════
+   Edge & Elegance Beauty & Barber Studio
+   style.css  —  Unified stylesheet for all pages
+   Includes: base, header/nav, hero, slideshow, pricing, team,
+             catalog, FAQ, reviews, booking, animations, responsive
+   ═══════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────
+   RESET & CSS CUSTOM PROPERTIES
+───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --ink:    #0d0d0d;   /* near-black background */
+  --cream:  #f5f0e8;   /* off-white text */
+  --gold:   #c9a96e;   /* brand accent */
+  --muted:  #7a7060;   /* secondary text */
+  --border: rgba(201, 169, 110, 0.25); /* subtle gold border */
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--ink);
+  color: var(--cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Grain / film-noise texture overlay — fixed, behind everything */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+}
+
+
+/* ─────────────────────────────────────────────
+   HEADER — Fixed top bar with logo + Bootstrap nav
+   Applies to every page via body > header
+───────────────────────────────────────────── */
+body > header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 68px;
+  background: rgba(13, 13, 13, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  animation: fadeDown 0.8s ease both;
+}
+
+/* Studio wordmark */
+body > header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Gold ampersand in logo */
+body > header h1 span { color: var(--gold); }
+
+
+/* ─────────────────────────────────────────────
+   BOOTSTRAP NAVBAR OVERRIDES
+   Make Bootstrap nav match the dark gold aesthetic
+───────────────────────────────────────────── */
+
+/* The Bootstrap <nav> sits inside <header> — reset its background */
+#main-nav {
+  background: transparent !important;
+  border: none;
+  padding: 0;
+  height: auto;
+}
+
+/* Nav links — small caps, tracked, muted by default */
+#main-nav .nav-link {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted) !important;
+  text-decoration: none;
+  transition: color 0.3s;
+  padding: 4px 0;
+}
+
+/* Hover + active state → cream/gold */
+#main-nav .nav-link:hover,
+#main-nav .nav-link.active { color: var(--cream) !important; }
+
+/* Bootstrap toggler (hamburger) — show gold border */
+#main-nav .navbar-toggler {
+  border-color: rgba(201, 169, 110, 0.4);
+  padding: 6px 8px;
+}
+
+/* Invert the default Bootstrap toggler icon so it appears light */
+#main-nav .navbar-toggler-icon {
+  filter: invert(1);
+}
+
+/* Collapsed mobile menu — dark glass panel */
+#main-nav .navbar-collapse {
+  background: rgba(13, 13, 13, 0.97);
+}
+
+/* On mobile the links stack — add padding for readability */
+@media (max-width: 991px) {
+  body > header { padding: 0 20px; height: 60px; }
+
+  #main-nav .navbar-collapse {
+    position: fixed;
+    top: 60px; left: 0; right: 0;
+    backdrop-filter: blur(16px);
+    padding: 24px 32px 32px;
+    border-top: 1px solid var(--border);
+    z-index: 9998;
+  }
+
+  #main-nav .nav-link {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: none;
+    padding: 10px 0;
+    color: var(--cream) !important;
+    border-bottom: 1px solid var(--border);
+  }
+
+  #main-nav .navbar-nav { gap: 0 !important; }
+}
+
+
+/* ─────────────────────────────────────────────
+   MAIN — base push below fixed header
+───────────────────────────────────────────── */
+main {
+  padding-top: 68px;
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ─────────────────────────────────────────────
+   HERO SECTION (index.html)
+   Two-column grid: slideshow aside + article text
+───────────────────────────────────────────── */
+main > section:first-of-type {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* ─────────────────────────────────────────────
+   ASIDE — Image Slideshow Panel
+───────────────────────────────────────────── */
+aside {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  animation: revealLeft 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+/* Fade image edges into the background */
+aside::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, transparent 60%, var(--ink) 100%),
+    linear-gradient(to bottom, var(--ink) 0%, transparent 12%, transparent 88%, var(--ink) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Gold vertical rule on the right edge of the slideshow */
+aside::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 15%; bottom: 15%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  z-index: 3;
+}
+
+/* ── Slide figures ── */
+aside figure {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+aside figure.active { opacity: 1; }
+
+aside figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transform: scale(1.06);          /* start zoomed in */
+  transition: transform 8s ease;
+  display: block;
+}
+
+aside figure.active img { transform: scale(1); } /* slowly zoom out while active */
+
+aside figure figcaption {
+  position: absolute;
+  bottom: 60px;
+  left: 28px;
+  z-index: 2;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.55);
+}
+
+/* ── Slideshow Controls ── */
+.slide-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 4;
+}
+
+.slide-controls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+
+.slide-controls button:hover { color: var(--gold); }
+.slide-controls button svg   { display: block; }
+
+/* Dot indicators */
+.slide-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  list-style: none;
+}
+
+.slide-dots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: background 0.3s, transform 0.3s;
+  cursor: pointer;
+  display: block;
+}
+
+.slide-dots span.active {
+  background: var(--gold);
+  transform: scale(1.6);
+}
+
+/* Auto-advance progress bar along the bottom of the aside */
+aside progress {
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 2px;
+  width: 100%;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  z-index: 4;
+  appearance: none;
+}
+
+aside progress::-webkit-progress-bar   { background: rgba(255, 255, 255, 0.08); }
+aside progress::-webkit-progress-value { background: var(--gold); }
+aside progress::-moz-progress-bar      { background: var(--gold); }
+
+
+/* ─────────────────────────────────────────────
+   HERO ARTICLE — text panel
+───────────────────────────────────────────── */
+main > section:first-of-type > article {
+  padding: 0 80px 0 64px;
+  position: relative;
+  z-index: 2;
+  animation: revealRight 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+/* Eyebrow label above heading */
+main > section:first-of-type > article > p:first-of-type {
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+main > section:first-of-type > article > p:first-of-type::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+/* Main headline */
+main > section:first-of-type > article h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.2rem, 5vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 28px;
+  color: var(--cream);
+}
+
+main > section:first-of-type > article h2 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+/* Body copy */
+main > section:first-of-type > article > p:last-of-type {
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 380px;
+  margin-bottom: 48px;
+  font-weight: 300;
+}
+
+/* CTA button row */
+main > section:first-of-type > article ul {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+
+/* Primary gold CTA button */
+main > section:first-of-type > article ul li:first-child a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 34px;
+  background: var(--gold);
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.35s ease;
+}
+
+/* Cream wipe-over on hover */
+main > section:first-of-type > article ul li:first-child a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  transform: translateX(-101%);
+  transition: transform 0.35s ease;
+}
+
+main > section:first-of-type > article ul li:first-child a:hover::before { transform: translateX(0); }
+
+main > section:first-of-type > article ul li:first-child a span,
+main > section:first-of-type > article ul li:first-child a svg { position: relative; z-index: 1; }
+
+main > section:first-of-type > article ul li:first-child a svg { transition: transform 0.3s; }
+main > section:first-of-type > article ul li:first-child a:hover svg { transform: translateX(4px); }
+
+/* Ghost / secondary link */
+main > section:first-of-type > article ul li:last-child a {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+main > section:first-of-type > article ul li:last-child a:hover {
+  color: var(--cream);
+  border-color: var(--gold);
+}
+
+
+/* ─────────────────────────────────────────────
+   SCROLL HINT — decorative "scroll" label
+───────────────────────────────────────────── */
+main > section:first-of-type > small {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  animation: fadeIn 1s 1.5s both;
+}
+
+main > section:first-of-type > small::after {
+  content: '';
+  width: 1px;
+  height: 48px;
+  display: block;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollDrop 1.6s ease infinite;
+}
+
+
+/* ─────────────────────────────────────────────
+   FOOTER — shared across all pages
+───────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 32px 48px;
+  border-top: 1px solid var(--border);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ─────────────────────────────────────────────
+   PRICING PAGE (pricing.html)
+───────────────────────────────────────────── */
+
+/* Push content below the fixed header */
+#pricing-main { padding-top: 110px; }
+
+/* Center the pricing section container */
+#pricing-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  text-align: center;
+}
+
+/* Override: nested <header> inside a section should NOT be fixed */
+#pricing-section header,
+#team-section header,
+.section-header {
+  position: static !important;
+  height: auto !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin-bottom: 40px;
+  text-align: center !important;
+  display: block;
+  width: 100%;
+  animation: none;
+}
+
+/* Pricing page title */
+#pricing-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 10px;
+}
+
+/* Pricing page subtitle */
+#pricing-subtitle {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 30px;
+}
+
+/* Pricing table */
+#pricing-table {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+/* All table cells */
+#pricing-table th,
+#pricing-table td {
+  border: 1px solid var(--border);
+  padding: 14px;
+  text-align: center;
+}
+
+/* Column header row */
+#pricing-table thead th {
+  background: rgba(201, 169, 110, 0.10);
+  color: var(--gold);
+}
+
+/* Category sub-header rows (e.g. "Grooming Services") */
+.category-header th {
+  background: rgba(201, 169, 110, 0.20);
+  color: var(--gold);
+}
+
+/* Alternating row tint for readability */
+#pricing-table tbody tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+
+/* ─────────────────────────────────────────────
+   TEAM PAGE (team_member.html)
+───────────────────────────────────────────── */
+
+#team-main { padding-top: 110px; }
+
+#team-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  text-align: center;
+}
+
+/* Team page title */
+#team-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 10px;
+}
+
+#team-subtitle {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 40px;
+}
+
+/* 4-column grid on desktop */
+#team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  width: 100%;
+}
+
+/* Team member card */
+.team-card {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 15px;
+  text-align: center;
+}
+
+.team-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.team-card h3 {
+  color: var(--cream);
+  margin-bottom: 5px;
+}
+
+.role {
+  color: var(--gold);
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+.description {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+
+/* ─────────────────────────────────────────────
+   CATALOG PAGE (catalog.html)
+───────────────────────────────────────────── */
+
+/* Catalog items grid */
+.catalog-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 28px;
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+/* Individual catalog card */
+.catalog-item {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 20px;
+  text-align: center;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.catalog-item:hover {
+  border-color: rgba(201, 169, 110, 0.55);
+  background: rgba(201, 169, 110, 0.04);
+}
+
+.catalog-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.catalog-item h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+
+.catalog-item p {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* Catalog page intro text */
+main > h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--cream);
+  text-align: center;
+  padding: 60px 24px 12px;
+}
+
+main > h2 + p {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 0 24px;
+}
+
+
+/* ─────────────────────────────────────────────
+   FAQ PAGE (FAQ.html)
+───────────────────────────────────────────── */
+
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 60px 24px 40px;
+}
+
+/* Gold eyebrow label */
+.faq-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  animation: revealRight 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.faq-eyebrow::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+/* FAQ page heading */
+.faq-container > h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 4vw, 3.5rem);
+  font-weight: 300;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  text-align: center;
+  margin-bottom: 12px;
+  animation: revealRight 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+.faq-container > h2 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.faq-subtitle {
+  font-size: 0.88rem;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 52px;
+  font-weight: 300;
+  line-height: 1.7;
+  animation: revealRight 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+/* FAQ accordion list */
+#faq-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 64px;
+  animation: fadeIn 0.8s ease 0.5s both;
+}
+
+/* Individual FAQ accordion item */
+.faq-item {
+  border-top: 1px solid var(--border);
+  transition: background 0.3s ease;
+}
+
+.faq-item:last-child { border-bottom: 1px solid var(--border); }
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 4px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+  user-select: none;
+  transition: color 0.3s ease;
+  gap: 20px;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:hover { color: var(--gold); }
+
+/* Animated plus/minus icon via pseudo-element */
+.faq-item summary::after {
+  content: '';
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background-image:
+    linear-gradient(var(--gold), var(--gold)),
+    linear-gradient(var(--gold), var(--gold));
+  background-size: 8px 1px, 1px 8px;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.35s ease, border-color 0.3s ease;
+}
+
+/* Rotate to × when open */
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+  border-color: var(--gold);
+}
+
+.faq-item[open] summary { color: var(--gold); }
+
+/* Answer body */
+.faq-item > p,
+.faq-item > div.faq-answer {
+  padding: 0 4px 22px;
+  font-size: 0.88rem;
+  line-height: 1.85;
+  color: var(--muted);
+  font-weight: 300;
+  max-width: 600px;
+  animation: answerReveal 0.35s ease both;
+}
+
+@keyframes answerReveal {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* New FAQ items added dynamically get a fade-in */
+.faq-item.new-item { animation: fadeIn 0.5s ease both; }
+
+/* Submit-a-question panel */
+.add-faq {
+  width: 100%;
+  border: 1px solid var(--border);
+  padding: 40px;
+  background: rgba(201, 169, 110, 0.03);
+  animation: fadeIn 0.8s ease 0.7s both;
+  position: relative;
+}
+
+/* Gold top-left rule */
+.add-faq::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 40px;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.add-faq h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+}
+
+.add-faq > p {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 28px;
+  letter-spacing: 0.04em;
+}
+
+/* FAQ question input form */
+#faq-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#faq-form label {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: -8px;
+}
+
+#faq-form input[type="text"] {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--cream);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+#faq-form input[type="text"]::placeholder { color: rgba(122, 112, 96, 0.5); }
+
+#faq-form input[type="text"]:focus {
+  border-color: var(--gold);
+  background: rgba(201, 169, 110, 0.04);
+}
+
+/* Submit button for FAQ form — matches global gold button style */
+#faq-form button[type="submit"] {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 34px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.35s ease;
+  margin-top: 8px;
+}
+
+#faq-form button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  transform: translateX(-101%);
+  transition: transform 0.35s ease;
+}
+
+#faq-form button[type="submit"]:hover::before { transform: translateX(0); }
+
+#faq-form button[type="submit"] span { position: relative; z-index: 1; }
+
+
+/* ─────────────────────────────────────────────
+   REVIEWS PAGE (reviews.html)
+───────────────────────────────────────────── */
+
+/* Page hero banner */
+.reviews-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 80px 24px 60px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+/* Radial gold glow behind hero */
+.reviews-hero::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px; height: 300px;
+  background: radial-gradient(ellipse, rgba(201,169,110,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Eyebrow label with flanking rules */
+.eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation: revealUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.1s both;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+  content: '';
+  width: 40px; height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.reviews-hero h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  color: var(--cream);
+  margin-bottom: 16px;
+  animation: revealUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both;
+}
+
+.reviews-hero h2 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.reviews-hero > p {
+  font-size: 0.92rem;
+  color: var(--muted);
+  max-width: 440px;
+  line-height: 1.8;
+  font-weight: 300;
+  animation: revealUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+}
+
+/* ── Overall rating summary bar ── */
+.rating-summary {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 40px 48px;
+  border-bottom: 1px solid var(--border);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.overall-score { text-align: center; }
+
+.score-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4rem;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.score-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* Vertical rule between rating columns */
+.divider-v {
+  width: 1px;
+  height: 60px;
+  background: var(--border);
+}
+
+/* Star-count bar group */
+.bar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 220px;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.bar-row span:first-child { width: 36px; text-align: right; }
+
+.bar-track {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+/* Animated fill — starts at scaleX(0), JS adds .animate */
+.bar-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s cubic-bezier(0.16,1,0.3,1);
+}
+
+.bar-fill.animate { transform: scaleX(1); }
+
+.bar-row span:last-child { width: 24px; }
+
+/* ── Review cards section ── */
+.reviews-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 72px 48px 100px;
+}
+
+/* Section eyebrow with horizontal rule */
+.section-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* 3-column grid for review cards */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-bottom: 72px;
+}
+
+/* Individual review card */
+article.review-card {
+  border: 1px solid var(--border);
+  padding: 32px 28px;
+  background: rgba(255,255,255,0.02);
+  position: relative;
+  transition: border-color 0.3s, background 0.3s;
+  animation: revealUp 0.7s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+/* Staggered entrance animations */
+article.review-card:nth-child(1) { animation-delay: 0.1s; }
+article.review-card:nth-child(2) { animation-delay: 0.2s; }
+article.review-card:nth-child(3) { animation-delay: 0.3s; }
+article.review-card:nth-child(4) { animation-delay: 0.4s; }
+article.review-card:nth-child(5) { animation-delay: 0.5s; }
+article.review-card:nth-child(6) { animation-delay: 0.6s; }
+
+article.review-card:hover {
+  border-color: rgba(201,169,110,0.55);
+  background: rgba(201,169,110,0.04);
+}
+
+/* Decorative open quote mark */
+article.review-card::before {
+  content: '\201C';
+  position: absolute;
+  top: 20px; right: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4rem;
+  color: rgba(201,169,110,0.15);
+  line-height: 1;
+}
+
+/* Star rating display */
+.stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 18px;
+}
+
+.star {
+  width: 12px; height: 12px;
+  background: var(--gold);
+  clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+}
+
+.star.empty { background: rgba(201,169,110,0.2); }
+
+/* Review body text */
+article.review-card > p {
+  font-size: 0.88rem;
+  line-height: 1.85;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 28px;
+  font-style: italic;
+}
+
+/* Reviewer attribution row */
+.reviewer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+/* Initials avatar circle */
+.avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(201,169,110,0.15);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.reviewer-info h3 {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--cream);
+  margin-bottom: 2px;
+}
+
+.reviewer-info p {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── Leave-a-Review form ── */
+.review-form-section {
+  border: 1px solid var(--border);
+  padding: 48px;
+  background: rgba(201,169,110,0.02);
+  position: relative;
+}
+
+/* Gold top accent rule */
+.review-form-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 48px;
+  width: 40px; height: 1px;
+  background: var(--gold);
+}
+
+.review-form-section h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+
+.review-form-section > p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 36px;
+  letter-spacing: 0.04em;
+}
+
+/* Star picker (radio buttons styled as stars) */
+.star-picker {
+  display: flex;
+  flex-direction: row-reverse; /* RTL so CSS sibling trick works */
+  gap: 6px;
+  margin-bottom: 32px;
+}
+
+.star-picker input[type="radio"] { display: none; }
+
+.star-picker label {
+  width: 28px; height: 28px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* Highlight selected stars and everything before (to the right in RTL) */
+.star-picker input[type="radio"]:checked ~ label,
+.star-picker label:hover,
+.star-picker label:hover ~ label {
+  background: var(--gold);
+}
+
+/* Review form 2-column grid */
+.review-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 32px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field.full { grid-column: 1 / -1; }
+
+.form-field label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+
+.form-field:focus-within label { color: var(--gold); }
+
+.form-field input,
+.form-field textarea {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-bottom-color: rgba(201,169,110,0.45);
+  color: var(--cream);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 300;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.3s, background 0.3s;
+  resize: none;
+  border-radius: 0;
+  width: 100%;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--gold);
+  background: rgba(201,169,110,0.05);
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder { color: rgba(122,112,96,0.5); }
+
+/* Inline validation error message */
+.err {
+  font-size: 0.68rem;
+  color: #e06060;
+  letter-spacing: 0.1em;
+  display: none;
+  margin-top: -4px;
+}
+
+.form-field.invalid .err  { display: block; }
+.form-field.invalid input,
+.form-field.invalid textarea { border-color: #e06060; }
+
+/* Shared submit button style (reviews + FAQ pages) */
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 40px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.35s;
+  margin-top: 24px;
+  border-radius: 0;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  transform: translateX(-101%);
+  transition: transform 0.38s cubic-bezier(0.16,1,0.3,1);
+}
+
+.submit-btn:hover::before { transform: translateX(0); }
+.submit-btn span, .submit-btn svg { position: relative; z-index: 1; }
+.submit-btn svg { transition: transform 0.3s; }
+.submit-btn:hover svg { transform: translateX(4px); }
+
+/* ── Success Toast notification ── */
+.toast {
+  position: fixed;
+  bottom: 32px; right: 32px;
+  background: var(--ink);
+  border: 1px solid var(--gold);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 500;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.toast.show { transform: translateY(0); opacity: 1; pointer-events: all; }
+
+.toast-icon {
+  width: 28px; height: 28px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.toast p { font-size: 0.8rem; color: var(--cream); letter-spacing: 0.06em; }
+
+
+/* ─────────────────────────────────────────────
+   BOOKING PAGE (Booking.html)
+   Note: Booking has its own Booking.css for the
+   form layout; these are the global overrides only.
+───────────────────────────────────────────── */
+
+/* Booking form inputs — scoped to .form-grid so they don't bleed into other pages */
+.form-grid input[type="text"],
+.form-grid input[type="email"],
+.form-grid input[type="tel"],
+.form-grid input[type="date"],
+.form-grid input[type="time"],
+.form-grid select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-bottom: 1px solid rgba(201, 169, 110, 0.45);
+  color: var(--cream);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.form-grid input[type="text"]:focus,
+.form-grid input[type="email"]:focus,
+.form-grid input[type="tel"]:focus,
+.form-grid input[type="date"]:focus,
+.form-grid input[type="time"]:focus,
+.form-grid select:focus {
+  border-color: var(--gold);
+  background: rgba(201, 169, 110, 0.05);
+  box-shadow: 0 4px 24px rgba(201, 169, 110, 0.07);
+}
+
+.form-grid input::placeholder { color: rgba(122, 112, 96, 0.55); }
+
+/* Date/time fields — force dark colour scheme in Chrome */
+.form-grid input[type="date"],
+.form-grid input[type="time"] { color-scheme: dark; }
+
+/* Custom select arrow wrapper */
+.select-wrapper { position: relative; }
+
+.select-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+}
+
+select option {
+  background: #1a1a18;
+  color: var(--cream);
+}
+
+/* Inline field error message (booking form) */
+small.error {
+  font-size: 0.68rem;
+  color: #e06060;
+  letter-spacing: 0.1em;
+  min-height: 1em;
+  display: block;
+}
+
+/* Booking success overlay */
+.success-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(13, 13, 13, 0.96);
+  backdrop-filter: blur(16px);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.5s ease both;
+}
+
+.success-overlay.show { display: flex; }
+
+.success-icon {
+  width: 56px; height: 56px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.success-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--cream);
+  letter-spacing: 0.04em;
+  animation: revealRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+}
+
+.success-sub {
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: revealRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+}
+
+.success-back {
+  margin-top: 8px;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 3px;
+  cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif;
+  transition: color 0.3s, border-color 0.3s;
+  animation: fadeIn 0.7s ease 0.6s both;
+}
+
+.success-back:hover { color: var(--cream); border-color: var(--gold); }
+
+/* Booking form container layout */
+.booking-container {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 80px 40px;
+  position: relative;
+  z-index: 2;
+  animation: revealRight 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+/* Eyebrow above booking heading */
+.booking-container::before {
+  content: 'Reserve Your Session';
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+/* Booking page heading */
+.booking-container h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 4vw, 3.8rem);
+  font-weight: 300;
+  line-height: 1.08;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+
+.booking-container h2 em { font-style: italic; color: var(--gold); }
+
+/* Booking subhead copy */
+.booking-subhead {
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+  margin-bottom: 52px;
+  max-width: 420px;
+}
+
+/* Gold divider line */
+.booking-divider {
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  margin-bottom: 52px;
+  display: block;
+}
+
+/* 2-column form grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px 32px;
+}
+
+.form-grid section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Full-width cell (submit button row) */
+.form-grid section.full { grid-column: 1 / -1; }
+
+/* Field labels */
+.form-grid label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+
+.form-grid section:focus-within label { color: var(--gold); }
+
+/* Submit button */
+.form-grid button[type="submit"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 18px 40px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.35s ease;
+  border-radius: 0;
+}
+
+.form-grid button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  transform: translateX(-101%);
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-grid button[type="submit"]:hover::before { transform: translateX(0); }
+.form-grid button[type="submit"] span          { position: relative; z-index: 1; }
+
+.form-grid button[type="submit"] .btn-arrow {
+  position: relative; z-index: 1;
+  width: 16px; height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.form-grid button[type="submit"]:hover .btn-arrow { transform: translateX(5px); }
+
+/* Extra top margin before the submit row */
+.form-grid .full { margin-top: 16px; }
+
+
+/* ─────────────────────────────────────────────
+   KEYFRAME ANIMATIONS
+───────────────────────────────────────────── */
+
+/* Header slides down on load */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Generic fade */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Slideshow panel enters from left */
+@keyframes revealLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Text/content enters from right */
+@keyframes revealRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Used by reviews page cards */
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Animated scroll indicator drip */
+@keyframes scrollDrop {
+  0%   { opacity: 0; transform: translateY(-8px); }
+  50%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(24px); }
+}
+
+/* Booking success icon pops in */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE BREAKPOINTS
+───────────────────────────────────────────── */
+
+/* ── Tablet (≤900px): reviews cards → 2 columns ── */
+@media (max-width: 900px) {
+  .cards-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── Tablet (≤1100px): team grid → 2 columns ── */
+@media (max-width: 1100px) {
+  #team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Mobile (≤768px): stack everything ── */
+@media (max-width: 768px) {
+
+  /* Reduced header height */
+  body > header { padding: 0 20px; height: 60px; }
+
+  /* Push main below shorter header */
+  main { padding-top: 60px; }
+
+  /* Hero stacks vertically */
+  main > section:first-of-type {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  /* Slideshow becomes a tall banner instead of full viewport */
+  aside {
+    height: 72vw;
+    min-height: 260px;
+    max-height: 420px;
+    animation: none;
+  }
+
+  aside::before { display: none; } /* hide gold vertical rule */
+
+  aside::after {
+    background:
+      linear-gradient(to bottom, var(--ink) 0%, transparent 10%,
+        transparent 85%, var(--ink) 100%);
+  }
+
+  aside figure figcaption { bottom: 48px; left: 20px; }
+
+  /* Hero text centres on mobile */
+  main > section:first-of-type > article {
+    padding: 36px 24px 48px;
+    animation: none;
+    text-align: center;
+  }
+
+  main > section:first-of-type > article > p:first-of-type { justify-content: center; }
+  main > section:first-of-type > article > p:first-of-type::before { display: none; }
+  main > section:first-of-type > article h2 { font-size: clamp(2.2rem, 10vw, 3.2rem); }
+  main > section:first-of-type > article > p:last-of-type { max-width: 100%; }
+  main > section:first-of-type > article ul { justify-content: center; flex-wrap: wrap; gap: 16px; }
+
+  main > section:first-of-type > small { display: none; }
+
+  /* Pricing & Team pages */
+  #pricing-main, #team-main { padding-top: 80px; }
+  #team-grid { grid-template-columns: 1fr; }
+  #pricing-title, #team-title { font-size: 2rem; }
+
+  /* Reviews page */
+  .reviews-hero { padding: 52px 24px 40px; }
+  .reviews-hero h2 { font-size: 2.4rem; }
+  .rating-summary { padding: 28px 24px; gap: 20px; }
+  .divider-v { display: none; }
+  .bar-group { min-width: 100%; }
+  .reviews-section { padding: 40px 20px 64px; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .review-form-section { padding: 32px 24px; }
+  .review-form-grid { grid-template-columns: 1fr; }
+  .submit-btn { width: 100%; justify-content: center; }
+  .toast { left: 20px; right: 20px; bottom: 20px; }
+
+  /* Booking page */
+  .form-grid { grid-template-columns: 1fr; gap: 22px; }
+  .booking-container { padding: 48px 24px 60px; }
+
+  /* Footer */
+  footer { padding: 24px 20px; font-size: 0.65rem; }
+}
+
+/* ── Small phones (≤400px) ── */
+@media (max-width: 400px) {
+  body > header h1 { font-size: 1rem; }
+  main > section:first-of-type > article h2 { font-size: 2rem; }
+  main > section:first-of-type > article ul { flex-direction: column; align-items: center; }
+}
+
+/* ── Large screens (≥700px): team page ── */
+@media (min-width: 700px) and (max-width: 1100px) {
+  #team-grid { grid-template-columns: repeat(2, 1fr); }
+}

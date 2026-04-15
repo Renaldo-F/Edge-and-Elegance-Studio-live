@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edge &amp; Elegance Beauty &amp; Barber Studio</title>
+
+  <!-- Google Fonts: Cormorant Garamond (display) + Instrument Sans (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+  <!-- Project unified stylesheet -->
+  <link rel="stylesheet" href="Include/style.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER — Studio wordmark + Bootstrap nav
+  ═══════════════════════════════════════════ -->
+  <header>
+
+    <!-- Studio name / wordmark -->
+    <h1>Edge <span>&amp;</span> Elegance</h1>
+
+    <!-- Bootstrap responsive navbar -->
+    <nav aria-label="Primary navigation"
+         class="navbar navbar-expand-lg navbar-dark"
+         id="main-nav">
+
+      <!-- Hamburger toggler (visible on mobile) -->
+      <button type="button"
+              class="navbar-toggler"
+              data-bs-toggle="collapse"
+              data-bs-target="#navMenu"
+              aria-controls="navMenu"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Collapsible nav links -->
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto gap-3">
+          <li class="nav-item"><a class="nav-link active" href="index.html" aria-current="page">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="Include/pricing.html">Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="Include/reviews.html">Reviews</a></li>
+          <li class="nav-item"><a class="nav-link" href="Include/Booking.html">Booking</a></li>
+          <li class="nav-item"><a class="nav-link" href="Include/catalog.html">Catalog</a></li>
+          <li class="nav-item"><a class="nav-link" href="Include/FAQ.html">FAQ</a></li>
+          <li class="nav-item"><a class="nav-link" href="Contact/team_member.html">Team</a></li>
+        </ul>
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════
+       MAIN — Primary page content
+  ═══════════════════════════════════════════ -->
+  <main>
+
+    <!-- ── Section 1: Hero — two-column layout ── -->
+    <section>
+
+      <!-- Aside: image slideshow panel (left column) -->
+      <aside>
+
+        <!-- Slide 1: Low fade / taper -->
+        <figure class="active">
+          <img src="Images/ss4.jpg" alt="Clean low fade taper cut">
+          <figcaption>Low Fade &amp; Taper</figcaption>
+        </figure>
+
+        <!-- Slide 2: Nail art -->
+        <figure>
+          <img src="Images/ss5.jpg" alt="French tip nail art">
+          <figcaption>French Tip Nail Art</figcaption>
+        </figure>
+
+        <!-- Slide 3: Box braids -->
+        <figure>
+          <img src="Images/ss3.jpg" alt="Box braids and knotless styles">
+          <figcaption>Box Braids &amp; Knotless</figcaption>
+        </figure>
+
+        <!-- Slide 4: Cornrow swirl -->
+        <figure>
+          <img src="Images/ss2.jpg" alt="Cornrow swirl pattern">
+          <figcaption>Cornrow Swirl Design</figcaption>
+        </figure>
+
+        <!-- Slide 5: Cornrow waves -->
+        <figure>
+          <img src="Images/ss.jpg" alt="Cornrow wave pattern">
+          <figcaption>Cornrow Wave Pattern</figcaption>
+        </figure>
+
+        <!-- Slideshow controls: prev / dots / next -->
+        <nav class="slide-controls" aria-label="Slideshow controls">
+
+          <!-- Previous slide button -->
+          <button type="button" id="prev-btn" aria-label="Previous slide">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M11 14L6 9l5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <!-- Dot indicators — one per slide -->
+          <ul class="slide-dots" role="tablist">
+            <li><span class="active" role="tab" aria-label="Slide 1"></span></li>
+            <li><span role="tab" aria-label="Slide 2"></span></li>
+            <li><span role="tab" aria-label="Slide 3"></span></li>
+            <li><span role="tab" aria-label="Slide 4"></span></li>
+            <li><span role="tab" aria-label="Slide 5"></span></li>
+          </ul>
+
+          <!-- Next slide button -->
+          <button type="button" id="next-btn" aria-label="Next slide">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+        </nav>
+
+        <!-- Auto-advance progress bar -->
+        <progress value="0" max="100"></progress>
+
+      </aside>
+
+
+      <!-- Article: hero text panel (right column) -->
+      <article>
+        <!-- Eyebrow label -->
+        <p>Beauty &amp; Barber Studio &middot; Kingston, JA</p>
+
+        <!-- Main headline -->
+        <h2>
+          Where Style<br>
+          Meets <em>Precision</em>
+        </h2>
+
+        <!-- Tagline body copy -->
+        <p>
+          Premium cuts, flawless beauty — crafted for those who demand
+          the best. Your look, perfected.
+        </p>
+
+        <!-- CTA buttons -->
+        <ul>
+          <li>
+            <!-- Primary: Book Appointment -->
+            <a href="Include/Booking.html" class="primary-btn">
+              <span>Book Appointment</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+          <!-- Secondary: View Services -->
+          <li><a href="Assets/catalog.html">View Services</a></li>
+        </ul>
+      </article>
+
+    </section>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER — Copyright & studio info
+  ═══════════════════════════════════════════ -->
+  <footer>
+    <small>&copy; 2026 Edge &amp; Elegance Beauty &amp; Barber Studio &middot; All rights reserved</small>
+  </footer>
+
+  <!-- Bootstrap 5 JS bundle (includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Unified project script -->
+  <script src="Assets/script.js"></script>
+
+</body>
+</html>
